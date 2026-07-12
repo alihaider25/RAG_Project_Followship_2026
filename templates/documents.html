@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Documents{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-8 offset-md-2">
+
+        <h4 class="mb-3"><i class="bi bi-folder"></i> Document Library</h4>
+
+        <!-- Upload box -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Upload a document (PDF, DOCX, TXT)</label>
+                        <input type="file" class="form-control" id="file-input" name="file" accept=".pdf,.docx,.txt" multiple required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-upload"></i> Upload
+                    </button>
+                </form>
+                <div id="upload-status" class="mt-2"></div>
+            </div>
+        </div>
+
+        <!-- Document list -->
+        <h6 class="text-muted">Uploaded Documents</h6>
+        <table class="table table-bordered bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th>Filename</th>
+                    <th>Status</th>
+                    <th>Chunks</th>
+                    <th>Uploaded</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="documents-table-body">
+                {% for doc in documents %}
+                <tr id="doc-row-{{ doc.id }}">
+                    <td>{{ doc.filename }}</td>
+                    <td>
+                        {% if doc.status == 'indexed' %}
+                            <span class="badge bg-success">Indexed</span>
+                        {% elif doc.status == 'processing' %}
+                            <span class="badge bg-warning text-dark">Processing</span>
+                        {% else %}
+                            <span class="badge bg-danger">Failed</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ doc.chunk_count }}</td>
+                    <td>{{ doc.upload_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="{{ doc.id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

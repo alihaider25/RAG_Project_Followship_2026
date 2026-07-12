@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-10 offset-md-1">
+
+        <h4 class="mb-4"><i class="bi bi-graph-up"></i> Admin Dashboard</h4>
+
+        <!-- Stat cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <h6 class="text-muted">Total Documents</h6>
+                    <h3>{{ total_documents }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <h6 class="text-muted">Indexed</h6>
+                    <h3>{{ indexed_documents }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <h6 class="text-muted">Chat Sessions</h6>
+                    <h3>{{ total_sessions }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center p-3">
+                    <h6 class="text-muted">Total Questions</h6>
+                    <h3>{{ total_messages }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Recent questions -->
+            <div class="col-md-6">
+                <h6 class="text-muted">Recent Questions</h6>
+                <ul class="list-group mb-4">
+                    {% for q in recent_questions %}
+                    <li class="list-group-item">
+                        {{ q.content }}
+                        <br><small class="text-muted">{{ q.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item text-muted">No questions yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Document overview -->
+            <div class="col-md-6">
+                <h6 class="text-muted">Document Overview</h6>
+                <table class="table table-bordered bg-white">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Filename</th>
+                            <th>Status</th>
+                            <th>Chunks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doc in documents %}
+                        <tr>
+                            <td>{{ doc.filename }}</td>
+                            <td>
+                                {% if doc.status == 'indexed' %}
+                                    <span class="badge bg-success">Indexed</span>
+                                {% elif doc.status == 'processing' %}
+                                    <span class="badge bg-warning text-dark">Processing</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Failed</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ doc.chunk_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

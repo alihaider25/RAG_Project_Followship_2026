@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">
+                <i class="bi bi-chat-dots"></i> <span>Conversations</span>
+            </div>
+            <button id="collapse-btn" aria-label="Collapse sidebar"><i class="bi bi-chevron-double-left"></i></button>
+        </div>
+
+        <button id="new-chat-btn"><i class="bi bi-plus-lg"></i> New chat</button>
+
+        <div class="sidebar-history" id="history-list"></div>
+    </div>
+
+    <div class="chat-main">
+        <div class="top-row">
+            <button id="expand-btn" class="d-none" aria-label="Expand sidebar"><i class="bi bi-chevron-double-right"></i></button>
+        </div>
+
+        <div id="chat-window">
+            <div class="text-muted text-center mt-5">
+                Ask a question about your uploaded documents to get started.
+            </div>
+        </div>
+
+        <div class="input-float">
+            <div id="attached-chip" class="d-none"></div>
+            <form id="chat-form">
+                <i class="bi bi-file-earmark-arrow-up icon-btn" id="attach-trigger" title="Upload a document"></i>
+                <input type="file" id="attach-file-input" accept=".pdf,.docx,.txt" style="display:none">
+                <input type="text" id="user-input" placeholder="Ask a question..." autocomplete="off" required>
+                <button type="submit" aria-label="Send"><i class="bi bi-send-fill"></i></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
