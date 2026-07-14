@@ -76,7 +76,6 @@ rag_project/
 ```bash
 pip install -r requirements.txt
 ```
-
 ### 2. Configure environment variables
 Create a `.env` file in the project root:
 DB_USER=root
