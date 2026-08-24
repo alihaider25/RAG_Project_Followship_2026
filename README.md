@@ -36,7 +36,7 @@ rag_project/
 ├── services/
 │   ├── document_service.py  # Text extraction + chunking
 │   ├── vector_store.py      # ChromaDB embedding storage/search
-│   └── llm_service.py       # OpenRouter API calls
+│   └── llm_service.py       # OpenRouter API calls 
 │
 ├── routes/
 │   ├── document_routes.py   # /upload, /documents, /documents/<id>/delete
